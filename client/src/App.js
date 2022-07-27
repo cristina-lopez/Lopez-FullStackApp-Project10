@@ -4,10 +4,12 @@ import './App.css';
 
 function App() {
   return (
-    fetch(config.apiBaseUrl)
+    fetch('http://localhost:5000/api/courses')
       .then(res => res.json())
-      .then((data) => 
+      .then((data) => {
         console.log(data)
+      }
+        
       )
   );
 }
