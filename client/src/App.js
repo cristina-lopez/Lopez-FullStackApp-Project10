@@ -13,7 +13,7 @@ import UserSignIn from './components/UserSignIn';
 import UserSignUp from './components/UserSignUp';
 import UserSignOut from './components/UserSignOut';
 //import config from './components/config';
-import './App.css';
+import '../styles/global.css';
 //import { useState } from 'react';
 import { withContext } from './Context';
 

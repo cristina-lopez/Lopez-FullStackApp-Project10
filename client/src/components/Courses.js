@@ -14,31 +14,43 @@ export default function Courses() {
             })
     ); */
 
-    const [courses, setCourses]=useState([]);
+    const [courses, setCourses] = useState([]);
 
-    useEffect(() => {
+/*     useEffect(() => {
         console.log('useEffect called!');
         fetch('http://localhost:5000/api/courses')
             .then(res => res.json())
-            //.then(courses => console.log(courses.courses))
             .then(data => {
                 setCourses(data.courses)
             })
           .catch(err => console.log('Oh noes!', err))
-      }, []);
+        console.log(courses);
+      }, []); */
+
+    useEffect(() => {
+        const fetchData = async() => {
+            try {
+                const response = await fetch('http://localhost:5000/api/courses');
+                const json = await response.json();
+                setCourses(json.courses);
+            } catch (err) {
+                console.log("error", err)
+            }
+        };
+        fetchData();
+    });
 
     return (
-        
         <main>
             <div className="wrap main--grid">
-              {/*   {courses.map((course, index) => {
+                {courses.map((course, index) => {
                     return (
-                        <Link key={index} className="course--module course--link" to={`/courses/${course.id}`} >,
-                            <h2 className="course--label">Course</h2>,
-                            <h3 className="course--title">${course.title}</h3>
+                        <Link key={index} className="course--module course--link" to={`/courses/${course.id}`} >
+                            <h2 className="course--label">Course</h2>
+                            <h3 className="course--title">{course.title}</h3>
                         </Link>
                     );
-                })} */}
+                })} 
                 
                 <Link className="course--module course--add--module" to="/createCourse">
                     <span className="course--add--title">
@@ -50,4 +62,4 @@ export default function Courses() {
             </div>
         </main>
     );
-  }
+}
