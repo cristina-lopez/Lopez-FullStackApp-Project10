@@ -19,14 +19,16 @@ export default function Courses() {
     useEffect(() => {
         console.log('useEffect called!');
         fetch('http://localhost:5000/api/courses')
-          .then(res => res.json())
-          //.then(courses => console.log(courses.courses))
-          .then(data => setCourses(courses.courses))
+            .then(res => res.json())
+            //.then(courses => console.log(courses.courses))
+            .then(data => {
+                setCourses(data.courses)
+            })
           .catch(err => console.log('Oh noes!', err))
       }, []);
 
     return (
-        console.log(courses),
+        
         <main>
             <div className="wrap main--grid">
               {/*   {courses.map((course, index) => {
