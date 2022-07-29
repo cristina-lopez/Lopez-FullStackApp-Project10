@@ -6,18 +6,18 @@ import {
 //import { Provider } from './Context';
 import Header from './components/Header';
 import Courses from './components/Courses';
-import CreateCourse from './components/CreateCourse';
-import UpdateCourse from './components/UpdateCourse';
+//import CreateCourse from './components/CreateCourse';
+//import UpdateCourse from './components/UpdateCourse';
 import CourseDetails from './components/CourseDetails';
-import UserSignIn from './components/UserSignIn';
-import UserSignUp from './components/UserSignUp';
-import UserSignOut from './components/UserSignOut';
+//import UserSignIn from './components/UserSignIn';
+//import UserSignUp from './components/UserSignUp';
+//import UserSignOut from './components/UserSignOut';
 //import config from './components/config';
-import '../styles/global.css';
+import './global.css';
 //import { useState } from 'react';
-import { withContext } from './Context';
+//import { withContext } from './Context';
 
-const CoursesWithContext = withContext(Courses);
+//const CoursesWithContext = withContext(Courses);
 
 export default function App() {
   
@@ -27,12 +27,13 @@ export default function App() {
       <Header />
       <Switch>
         <Route exact path='/' component={Courses} />
+        <Route exact path='/courses' component={Courses} />
         {/* <Route path ='/courses/create' component={CreateCourse} /> */}
-        {/* <Route path ='/courses/:id/update' component={UpdateCourse} />
+        {/* <Route path ='/courses/:id/update' component={UpdateCourse} />  */}
         <Route path='/courses/:id' component={CourseDetails} />
-        <Route path='/signin' component={UserSignIn} />
-        <Route path='signup' component={UserSignUp} />
-        <Route path='signout' component={UserSignOut} /> */}
+        {/*<Route path='/signin' component={UserSignIn} />  */}
+        {/*<Route path='signup' component={UserSignUp} />  */}
+        {/*<Route path='signout' component={UserSignOut} /> */}
       </Switch>
       <div className="App">
         <header className="App-header">

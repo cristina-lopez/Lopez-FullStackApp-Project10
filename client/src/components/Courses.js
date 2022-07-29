@@ -1,7 +1,7 @@
-import React, { Component, useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Context } from '../Context';
-import Data from '../Data';
+//import { Context } from '../Context';
+//import Data from '../Data';
 
 export default function Courses() {
 

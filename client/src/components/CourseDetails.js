@@ -4,4 +4,5 @@ const CourseDetails = props => (
 
 );
 
-export default CourseDetails; */
+export default CourseDetails;
+ */
