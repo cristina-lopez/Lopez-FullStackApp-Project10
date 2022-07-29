@@ -38,7 +38,7 @@ export default function Courses() {
             }
         };
         fetchData();
-    });
+    }, []);
 
     return (
         <main>
