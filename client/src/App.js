@@ -9,7 +9,7 @@ import Courses from './components/Courses';
 //import CreateCourse from './components/CreateCourse';
 //import UpdateCourse from './components/UpdateCourse';
 import CourseDetails from './components/CourseDetails';
-//import UserSignIn from './components/UserSignIn';
+import UserSignIn from './components/UserSignIn';
 //import UserSignUp from './components/UserSignUp';
 //import UserSignOut from './components/UserSignOut';
 //import config from './components/config';
@@ -31,7 +31,7 @@ export default function App() {
         {/* <Route path ='/courses/create' component={CreateCourse} /> */}
         {/* <Route path ='/courses/:id/update' component={UpdateCourse} />  */}
         <Route path='/courses/:id' component={CourseDetails} />
-        {/*<Route path='/signin' component={UserSignIn} />  */}
+        <Route path='/signin' component={UserSignIn} /> 
         {/*<Route path='signup' component={UserSignUp} />  */}
         {/*<Route path='signout' component={UserSignOut} /> */}
       </Switch>
