@@ -1,40 +1,59 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 //import Cookies from 'js-cookie';
-import Data from './Data';
+//import Data from './Data';
 
 export const Context = React.createContext(); //sets up provider and consumer
 
-export class Provider extends Component {
+export const Provider = (props) => {
 
-  state = {
-    courses: []
-    //authenticatedUser: Cookies.getJSON('authenticatedUser') || null
-  };
+    const [courses, setCourses] = useState([]);
 
-  constructor() {
-    super();
-    this.data = new Data();
-  }
+    const fetchCourses = () => {
+        setCourses(() => {
+            fetch('http://localhost:5000/api/courses')
+                .then(res => res.json())
+                .catch(error => {
+                    console.log('Error fetching and parsing data', error);
+                })
+        });
+    }
 
-  render() {
-    //const { authenticatedUser } = this.state;
-    const value = {
-      //authenticatedUser,
-      data: this.data,
-      actions: {
-        performFetch: this.performFetch,
-        signIn: this.signIn,
-        signOut: this.signOut
-      },
-    };
+    const signIn = async (username, password) => {
+        const user = await this.data.getUser(username, password);
+        if (user !== null) {
+          this.setState(() => {
+            return {
+              authenticatedUser: user,
+            };
+          });
+          //const cookieOptions = {
+          //  expires: 1 // 1 day
+          //};
+          //Cookies.set('authenticatedUser', JSON.stringify(user), {cookieOptions});
+        }
+        return user;
+    }
+
+    const signOut = () => {
+        this.setState({ authenticatedUser: null });
+        //Cookies.remove('authenticatedUser');
+    }
+
     return (
-      <Context.Provider value={value}>
-        {this.props.children}
+        <Context.Provider value={{
+            courses,
+            actions: {
+                getCourses: fetchCourses,
+                signIn: signIn,
+                signOut: signOut
+            }
+        }}>
+        {props.children}
       </Context.Provider>  
     );
-  }
+}
 
-    performFetch = () => {
+    /* performFetch = () => {
         this.setState({
             courses: fetch('http://localhost:5000/api/courses')
                 .then(res => res.json())
@@ -42,29 +61,18 @@ export class Provider extends Component {
                     console.log('Error fetching and parsing data', error);
                 })
         })
-    }
+    } */
 
-  signIn = async (username, password) => {
-    const user = await this.data.getUser(username, password);
-    if (user !== null) {
-      this.setState(() => {
-        return {
-          authenticatedUser: user,
-        };
-      });
-      //const cookieOptions = {
-      //  expires: 1 // 1 day
-      //};
-      //Cookies.set('authenticatedUser', JSON.stringify(user), {cookieOptions});
-    }
-    return user;
-  }
-
-  signOut = () => {
-    this.setState({ authenticatedUser: null });
-    //Cookies.remove('authenticatedUser');
-  }
-}
+    //const { authenticatedUser } = this.state;
+    /* const value = {
+        //authenticatedUser,
+        data: this.data,
+        actions: {
+          //performFetch: this.performFetch,
+          signIn: this.signIn,
+          signOut: this.signOut
+        },
+      }; */
 
 export const Consumer = Context.Consumer;
 
