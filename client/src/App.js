@@ -29,14 +29,14 @@ export default function App() {
       <Switch>
         <Route exact path='/' component={Courses} />
         <Route exact path='/courses' component={Courses} />
-        {/*<Route path ='/courses/create' component={CreateCourse} /> */}
+        <Route path ='/courses/create' component={CreateCourse} />
         {/* <Route path ='/courses/:id/update' component={UpdateCourse} />  */}
         <Route exact path='/courses/:id' component={CourseDetails} />
         <Route path='/signin' component={UserSignInWithContext} /> 
         <Route path='/signup' component={UserSignUpWithContext} />
         {/*<Route path='signout' component={UserSignOut} /> */}
       </Switch>
-      <div className="App">
+      {/* <div className="App">
         <header className="App-header">
           <img className="App-logo" alt="logo" />
           <p>
@@ -51,7 +51,7 @@ export default function App() {
             Learn React
           </a>
         </header>
-      </div> 
+      </div>  */}
     </BrowserRouter>
   );
 }

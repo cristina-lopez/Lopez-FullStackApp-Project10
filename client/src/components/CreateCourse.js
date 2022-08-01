@@ -1,26 +1,65 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useContext } from 'react';
 import Form from './Form';
-//import { Context } from '../Context';
+import { useHistory } from 'react-router-dom';
+import Context from '../Context';
 //import Data from '../Data';
 
 export default function CreateCourse() {
 
-    const [newCourse, setNewCourse] = useState([]);
+    let history = useHistory();
+    let context = useContext(Context.Context);
+
+    const [title, setTitle] = useState('');
+    const [desc, setDesc] = useState('');
+    const [estimatedTime, setEstimatedTime] = useState('');
+    const [materialsNeeded, setMaterialsNeeded] = useState('');
     const [errors, setErrors] = useState([]);
 
-    /* useEffect(() => {
-        const fetchData = async() => {
-            try {
-                const response = await fetch('http://localhost:5000/api/courses');
-                const json = await response.json();
-                setCourses(json.courses);
-            } catch (err) {
-                console.log("error", err)
-            }
+    const cancel = () => {
+        history.push('/courses');
+    }
+
+    const submit = () => {
+        // Create course
+        const course = {
+          title,
+          desc,
+          estimatedTime,
+          materialsNeeded,
         };
-        fetchData();
-    }, []); */
+    
+        context.data.createCourse(course)
+            .then( errors => {
+                if (errors.length) {
+                setErrors(errors);
+                } else {
+                    history.push('/courses');    
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+                history.push('/error');
+            });
+    }
+
+    const change = (event) => {
+        const name = event.target.name;
+        const value = event.target.value;
+        if (name === 'title') {
+            setTitle(value);
+        }
+        else if (name === 'desc') {
+            setDesc(value);
+        }
+        else if (name === 'estimatedTime') {
+            setEstimatedTime(value);
+        } else if (name === 'materialsNeeded') {
+            setMaterialsNeeded(value);
+        }
+        else {
+            return;
+        }
+    }
 
     return (
         <main>
@@ -38,35 +77,39 @@ export default function CreateCourse() {
                 )} */}
             
                 <Form
-                    cancel={this.cancel}
+                    cancel={cancel}
                     errors={errors}
-                    submit={this.submit}
+                    submit={submit}
                     submitButtonText="Create Course"
                     elements={() => (
                         <React.Fragment>
-                            <div class="main--flex">
+                            <div className="main--flex">
                                 <div>
-                                    <label htmlFor="courseTitle">Course Title</label>
-                                        <input id="courseTitle" name="courseTitle" type="text" value="" />
+                                    <label htmlFor="title">Course Title</label>
+                                        <input 
+                                            id="title" 
+                                            name="title" 
+                                            type="text" 
+                                            value={title} 
+                                            onChange={change}
+                                        />
                                     {/* <p>By USER </p> {course.author} */}
                                     <p>By USER </p>
-                                    <label htmlFor="courseDescription">Course Description</label>
-                                        <textarea id="courseDescription" name="courseDescription"></textarea>
+                                    <label htmlFor="desc">Course Description</label>
+                                        <textarea id="desc" name="desc" value={desc} onChange={change}></textarea>
                                 </div>
 
                                 <div>
                                     <label htmlFor="estimatedTime">Estimated Time</label>
-                                        <input id="estimatedTime" name="estimatedTime" type="text" value="" />
+                                        <input id="estimatedTime" name="estimatedTime" type="text" value={estimatedTime} onChange={change} />
 
                                     <label htmlFor="materialsNeeded">Materials Needed</label>
-                                        <textarea id="materialsNeeded" name="materialsNeeded"></textarea>
+                                        <textarea id="materialsNeeded" name="materialsNeeded" value={materialsNeeded} onChange={change}></textarea>
                                 </div>
                             </div>
                         </React.Fragment>
                     )} 
-                />     
-                    {/* <button class="button" type="submit">Create Course</button><button class="button button-secondary" onclick="event.preventDefault(); location.href='index.html';">Cancel</button> */}
-
+                />
             </div>
         </main>
     );
