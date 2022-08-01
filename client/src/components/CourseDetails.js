@@ -1,8 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import React, { useState, useEffect, useContext } from 'react';
+import { Link, useParams, useHistory } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown'
+import Context from '../Context';
 
 export default function CourseDetails() {
+
+    let history = useHistory();
+    let context = useContext(Context.Context);
 
     const [course, setCourse] = useState([]);
     const { id } = useParams();
@@ -12,7 +16,6 @@ export default function CourseDetails() {
             try {
                 const response = await fetch(`http://localhost:5000/api/courses/${id}`);
                 const json = await response.json();
-                //console.log(json);
                 setCourse(json);
             } catch (err) {
                 console.log("error", err)
@@ -21,60 +24,16 @@ export default function CourseDetails() {
         fetchData();
     }, []);
 
-    function api(path, method = 'GET', body = null, requiresAuth = false, credentials = null) {
-        const url = 'http://localhost:5000/api' + path;
-    
-        const options = {
-            method,
-            headers: {
-                'Content-Type': 'application/json; charset=utf-8',
-            },
-        };
-    
-        if (body !== null) {
-            options.body = JSON.stringify(body);
-        }
-    
-        //check is auth is required
-        /* if (requiresAuth) {
-            const encodedCredentials = btoa(`${credentials.username}:${credentials.password}`);
-    
-            options.headers['Authorization'] = `Basic ${encodedCredentials}`;
-        } */
-    
-        return fetch(url, options);
+    function deleteCourse(id) {
+        context.data.deleteCourse(id);
     }
-
-    const deleteCourse = async() => {
-        try {
-            const response = await fetch(`http://localhost:5000/api/courses/${id}/`, {
-                method: 'DELETE', 
-                mode: 'cors', 
-                headers: {
-                    'Content-Type': 'application/json'}});
-            //const response = await api(`/courses/${id}`, 'DELETE', null);
-            if (response.status === 204) {
-                return [];
-            }
-            else if (response.status === 400) {
-                return response.json().then(data => {
-                return data.errors;
-                });
-            }
-            else {
-                throw new Error();
-            }
-        } catch (err) {
-            console.log("error", err)
-        }
-    };
 
     return (
             <main>
             <div className="actions--bar">
                 <div className="wrap">
                     <Link className="button" to={`/courses/${id}/update`}>Update Course</Link>
-                    <Link className="button" to='/courses/' onClick={deleteCourse}>Delete Course</Link>
+                    <Link className="button" to='/courses/' onClick={deleteCourse(id)}>Delete Course</Link>
                     <Link className="button button-secondary" to="/courses">Return to List</Link>
                 </div>
             </div>

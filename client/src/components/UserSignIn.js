@@ -1,46 +1,3 @@
-/* import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-
-
-export default function UserSignIn() {
-
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [errors, setErrors] = useState([]);
-
-    const change = (event) => {
-        const name = event.target.name;
-        const value = event.target.value;
-
-        if (name === 'email') {
-            setEmail(value);
-        } 
-        if (name === 'password') {
-            setPassword(value);
-        }
-    }
-
-    const submit = () => {
-
-    }
-
-    return (
-        <main>
-            <div className="form--centered">
-                <h2>Sign In</h2>
-                <form onSubmit={submit}>
-                    <label for="emailAddress">Email Address</label>
-                    <input id="emailAddress" name="emailAddress" type="email" value={email} onChange={change} />
-                    <label for="password">Password</label>
-                    <input id="password" name="password" type="password" value={password} onChange={change} />
-                    <button className="button" type="submit">Sign In</button><button className="button button-secondary" onClick="event.preventDefault(); location.href='/courses';">Cancel</button>
-                </form>
-            <p>Don't have a user account? Click here to <Link to="/signup">sign up</Link>!</p>
-        </div>
-    </main>
-    );
-} */
-
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import Form from './Form';
@@ -76,14 +33,6 @@ export default class UserSignIn extends Component {
                                 <input id="password" name="password" type="password" value={password} onChange={this.change} />
                         </React.Fragment>
                     )} />
-
-                {/* <form onSubmit={this.submit}>
-                <label htmlFor="emailAddress">Email Address</label>
-                    <input id="emailAddress" name="emailAddress" type="email" value={email} onChange={this.change} />
-                    <label htmlFor="password">Password</label>
-                    <input id="password" name="password" type="password" value={password} onChange={this.change} />
-                    <button className="button" type="submit">Sign In</button><button className="button button-secondary" onClick={this.cancel}>Cancel</button>
-                </form> */}
                 <p>Don't have a user account? Click here to <Link to="/signup">sign up</Link>!</p>
             </div>
         </main>
@@ -103,7 +52,7 @@ export default class UserSignIn extends Component {
 
   submit = () => {
     const {context} = this.props;
-    const {from} = this.props.location.state || {from: {pathname: '/authenticated' }}
+    const {from} = this.props.location.state || {from: {pathname: '/courses' }}
     const {emailAddress, password} = this.state;
     context.actions.signIn(emailAddress, password)
       .then(user => {
