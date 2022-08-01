@@ -3,8 +3,6 @@ import { Link, useParams } from 'react-router-dom';
 
 export default function CourseDetails() {
 
-    //const id = e.target;
-    //console.log(id);
     const [course, setCourse] = useState([]);
     const { id } = useParams();
 

@@ -5,27 +5,7 @@ import { Link } from 'react-router-dom';
 
 export default function Courses() {
 
-    /* const [courses, setCourses] = useState(
-        fetch('http://localhost:5000/api/courses')
-            .then(res => res.json())
-            .then(res => console.log(res.type))
-            .catch(error => {
-                console.log('Error fetching and parsing data', error);
-            })
-    ); */
-
     const [courses, setCourses] = useState([]);
-
-/*     useEffect(() => {
-        console.log('useEffect called!');
-        fetch('http://localhost:5000/api/courses')
-            .then(res => res.json())
-            .then(data => {
-                setCourses(data.courses)
-            })
-          .catch(err => console.log('Oh noes!', err))
-        console.log(courses);
-      }, []); */
 
     useEffect(() => {
         const fetchData = async() => {

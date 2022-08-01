@@ -20,7 +20,6 @@ import './global.css';
 //const CoursesWithContext = withContext(Courses);
 
 export default function App() {
-  
 
   return (
     <BrowserRouter>
