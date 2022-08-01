@@ -23,7 +23,7 @@ export default function CourseDetails() {
     }, []);
 
     return (
-        <main>
+            <main>
             <div className="actions--bar">
                 <div className="wrap">
                     <Link className="button" to='/courses/:id/update'>Update Course</Link>
@@ -31,6 +31,7 @@ export default function CourseDetails() {
                     <Link className="button button-secondary" to="/courses">Return to List</Link>
                 </div>
             </div>
+            
             <div className="wrap">
                 <h2>Course Detail</h2>
                 <form>
@@ -38,7 +39,11 @@ export default function CourseDetails() {
                         <div>
                             <h3 className="course--detail--title">Course</h3>
                             <h4 className="course--name">{course.title}</h4>
-                            <p>By {course.user.firstName} {course.user.lastName}</p>
+                            {course.user && 
+                                (<p>
+                                    By {course.user.firstName} {course.user.lastName}
+                                </p>
+                            )}
                             <p>{course.description}</p>
                         </div>
                         {console.log(course)}
