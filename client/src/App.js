@@ -10,14 +10,16 @@ import Courses from './components/Courses';
 //import UpdateCourse from './components/UpdateCourse';
 import CourseDetails from './components/CourseDetails';
 import UserSignIn from './components/UserSignIn';
-//import UserSignUp from './components/UserSignUp';
+import UserSignUp from './components/UserSignUp';
 //import UserSignOut from './components/UserSignOut';
 //import config from './components/config';
 import './global.css';
 //import { useState } from 'react';
-//import { withContext } from './Context';
+import { withContext } from './Context';
 
 //const CoursesWithContext = withContext(Courses);
+const UserSignInWithContext = withContext(UserSignIn);
+const UserSignUpWithContext = withContext(UserSignUp);
 
 export default function App() {
 
@@ -30,8 +32,8 @@ export default function App() {
         {/* <Route path ='/courses/create' component={CreateCourse} /> */}
         {/* <Route path ='/courses/:id/update' component={UpdateCourse} />  */}
         <Route path='/courses/:id' component={CourseDetails} />
-        <Route path='/signin' component={UserSignIn} /> 
-        {/*<Route path='signup' component={UserSignUp} />  */}
+        <Route path='/signin' component={UserSignInWithContext} /> 
+        <Route path='/signup' component={UserSignUpWithContext} />
         {/*<Route path='signout' component={UserSignOut} /> */}
       </Switch>
       <div className="App">

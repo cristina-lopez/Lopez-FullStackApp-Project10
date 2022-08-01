@@ -28,7 +28,7 @@ export default function UserSignIn() {
         <main>
             <div className="form--centered">
                 <h2>Sign In</h2>
-                <form onChange={submit}>
+                <form onSubmit={submit}>
                     <label for="emailAddress">Email Address</label>
                     <input id="emailAddress" name="emailAddress" type="email" value={email} onChange={change} />
                     <label for="password">Password</label>
@@ -47,14 +47,14 @@ import Form from './Form';
 
 export default class UserSignIn extends Component {
   state = {
-    email: '',
+    emailAddress: '',
     password: '',
     errors: [],
   }
 
   render() {
     const {
-      email,
+      emailAddress,
       password,
       errors,
     } = this.state;
@@ -71,7 +71,7 @@ export default class UserSignIn extends Component {
                     elements={() => (
                         <React.Fragment>
                             <label htmlFor="emailAddress">Email Address</label>
-                                <input id="emailAddress" name="emailAddress" type="email" value={email} onChange={this.change} />
+                                <input id="emailAddress" name="emailAddress" type="email" value={emailAddress} onChange={this.change} />
                             <label htmlFor="password">Password</label>
                                 <input id="password" name="password" type="password" value={password} onChange={this.change} />
                         </React.Fragment>
@@ -104,8 +104,8 @@ export default class UserSignIn extends Component {
   submit = () => {
     const {context} = this.props;
     const {from} = this.props.location.state || {from: {pathname: '/authenticated' }}
-    const {email, password} = this.state;
-    context.actions.signIn(email, password)
+    const {emailAddress, password} = this.state;
+    context.actions.signIn(emailAddress, password)
       .then(user => {
         if (user === null) {
           this.setState(()=> {
@@ -113,7 +113,7 @@ export default class UserSignIn extends Component {
           })
         } else {
           this.props.history.push(from);
-          console.log(`SUCCESS! ${email} is now signed in!`);
+          console.log(`SUCCESS! ${emailAddress} is now signed in!`);
         }
       })
       .catch(err => {

@@ -39,8 +39,8 @@ export class Provider extends Component {
     );
   }
   
-  signIn = async (email, password) => {
-    const user = await this.data.getUser(email, password); // returns name and username
+  signIn = async (emailAddress, password) => {
+    const user = await this.data.getUser(emailAddress, password); // returns name and username
     if (user !== null) {
       this.setState(() => {
         return {
@@ -70,7 +70,7 @@ export const Consumer = Context.Consumer;
  * @returns {function} A higher-order component.
  */
 
-export default function withContext(Component) {
+export function withContext(Component) {
   return function ContextComponent(props) {
     return (
       <Context.Consumer>
@@ -79,3 +79,5 @@ export default function withContext(Component) {
     );
   }
 }
+
+export default {withContext, Context}
