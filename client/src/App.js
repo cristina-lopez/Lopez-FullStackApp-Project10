@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   BrowserRouter,
   Route,
@@ -14,10 +15,10 @@ import UserSignUp from './components/UserSignUp';
 //import UserSignOut from './components/UserSignOut';
 //import config from './components/config';
 import './global.css';
-//import { useState } from 'react';
-import { withContext } from './Context';
+import {withContext} from './Context';
 
 //const CoursesWithContext = withContext(Courses);
+const HeaderWithContext = withContext(Header);
 const UserSignInWithContext = withContext(UserSignIn);
 const UserSignUpWithContext = withContext(UserSignUp);
 
@@ -25,7 +26,8 @@ export default function App() {
 
   return (
     <BrowserRouter>
-      <Header />
+      <HeaderWithContext />
+
       <Switch>
         <Route exact path='/' component={Courses} />
         <Route exact path='/courses' component={Courses} />
