@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import Form from './Form';
 import { useHistory } from 'react-router-dom';
 import Context from '../Context';
+import { Buffer } from 'buffer';
 //import Data from '../Data';
 
 export default function CreateCourse() {
@@ -19,7 +20,7 @@ export default function CreateCourse() {
         history.push('/courses');
     }
 
-    const submit = () => {
+    function submit() {
         // Create course
         const course = {
           title,
@@ -27,25 +28,18 @@ export default function CreateCourse() {
           estimatedTime,
           materialsNeeded,
         };
-    
-        /* context.data.createCourse(course, context.authenticatedUser.emailAddress, context.authenticatedUser.password)
-            .then( errors => {
-                if (errors.length) {
-                setErrors(errors);
-                } else {
-                    history.push('/courses');    
-                }
-            })
-            .catch((err) => {
-                console.log(err);
-                history.push('/error');
-            }); */
 
+        const body = JSON.stringify(course);
+
+        console.log(body.title);
+        //console.log(JSON.stringify(course));
         fetch("http://localhost:5000/api/courses", {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(course),
-            credentials: 'include',
+            headers: { "Content-Type": "application/json" ,
+                    'Authorization': 'Basic ' + Buffer.from(`${context.authenticatedUser.emailAddress}:${context.authenticatedUser.password}`).toString("base64") 
+            },
+            body: body,
+            
         })
             .then( response => {
                 if (response.status === 201) {
