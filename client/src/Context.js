@@ -7,7 +7,8 @@ const Context = React.createContext();
 export class Provider extends Component {
 
   state = {
-    authenticatedUser: null
+    authenticatedUser: null,
+    courses: []
   };
 
   constructor() {
@@ -22,9 +23,11 @@ export class Provider extends Component {
 
   render() {
     const {authenticatedUser} = this.state;
+    const courses = this.state;
 
     const value = {
       authenticatedUser,
+      courses,
       data: this.data,
       actions: { 
         signIn: this.signIn,

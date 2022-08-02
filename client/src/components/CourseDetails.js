@@ -10,7 +10,7 @@ export default function CourseDetails() {
 
     const [course, setCourse] = useState([]);
     const { id } = useParams();
-
+    
     useEffect(() => {
         const fetchData = async() => {
             try {
@@ -24,16 +24,34 @@ export default function CourseDetails() {
         fetchData();
     }, []);
 
-    function deleteCourse(id) {
-        context.data.deleteCourse(id)
+    function deleteACourse() {
+        /* context.data.deleteCourse(id, context.authenticatedUser.emailAddress, context.authenticatedUser.password)
             .then(() => {
                 setCourse([]);
                 history.push('/courses');    
-            })
-            .catch((err) => {
+            }) */
+            /* .catch((err) => {
                 console.log(err);
                 history.push('/error');
-              });
+              }); */
+
+            fetch(`http://localhost:5000/api/courses/${id}`, {
+                method: "DELETE",
+                headers: { "Content-Type": "application/json" },
+                body: null,
+                credentials: 'same-origin',
+            })
+            .then( response => {
+                if (response.status === 204) {
+                    console.log("Course was deleted!");
+                } else if (response.status === 400){
+                    response.json().then(data => {
+                        return data.errors;
+                    });
+                } else {
+                    throw new Error();
+                }
+            })
     }
 
     return (
@@ -41,7 +59,7 @@ export default function CourseDetails() {
             <div className="actions--bar">
                 <div className="wrap">
                     <Link className="button" to={`/courses/${id}/update`}>Update Course</Link>
-                    <Link className="button" to='/courses/' onClick={(id) => deleteCourse(id)}>Delete Course</Link>
+                    <Link className="button" to='/courses/' onClick={deleteACourse}>Delete Course</Link>
                     <Link className="button button-secondary" to="/courses">Return to List</Link>
                 </div>
             </div>

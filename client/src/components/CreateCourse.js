@@ -28,7 +28,7 @@ export default function CreateCourse() {
           materialsNeeded,
         };
     
-        context.data.createCourse(course)
+        /* context.data.createCourse(course, context.authenticatedUser.emailAddress, context.authenticatedUser.password)
             .then( errors => {
                 if (errors.length) {
                 setErrors(errors);
@@ -39,7 +39,25 @@ export default function CreateCourse() {
             .catch((err) => {
                 console.log(err);
                 history.push('/error');
-            });
+            }); */
+
+        fetch("http://localhost:5000/api/courses", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(course),
+            credentials: 'include',
+        })
+            .then( response => {
+                if (response.status === 201) {
+                    console.log("New Course was added!");
+                } else if (response.status === 400){
+                    response.json().then(data => {
+                        return data.errors;
+                    });
+                } else {
+                    throw new Error();
+                }
+            })
     }
 
     const change = (event) => {
