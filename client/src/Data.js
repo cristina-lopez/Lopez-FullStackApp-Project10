@@ -1,5 +1,8 @@
 //import config from './config';
 
+import { useContext } from "react";
+import Context from "./Context";
+
 // This js file has methods that will interact with the user and course data.
 export default class Data {
     api(path, method = 'GET', body = null, requiresAuth = false, credentials = null) {
@@ -11,7 +14,7 @@ export default class Data {
                 'Content-Type': 'application/json; charset=utf-8',
             },
         };
-    
+        console.log(body);
         if (body !== null) {
             options.body = JSON.stringify(body);
         }
@@ -22,7 +25,7 @@ export default class Data {
     
             options.headers['Authorization'] = `Basic ${encodedCredentials}`;
         }
-    
+        console.log(options);
         return fetch(url, options);
     }
     
@@ -111,7 +114,11 @@ export default class Data {
     }
 
     async deleteCourse(id) {
-        const response = await this.api(`/courses/${id}`, 'DELETE', null);
+        //let context = useContext(Context.Context);
+        //console.log(context);
+        //const {user} = useContext(Context);
+        const response = await this.api(`/courses/${id}`, 'DELETE', null, true);
+        console.log(response);
         if (response.status === 204) {
             return [];
         }

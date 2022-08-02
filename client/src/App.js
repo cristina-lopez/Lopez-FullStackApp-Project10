@@ -12,7 +12,7 @@ import CreateCourse from './components/CreateCourse';
 import CourseDetails from './components/CourseDetails';
 import UserSignIn from './components/UserSignIn';
 import UserSignUp from './components/UserSignUp';
-//import UserSignOut from './components/UserSignOut';
+import UserSignOut from './components/UserSignOut';
 //import config from './components/config';
 import './global.css';
 import {withContext} from './Context';
@@ -21,6 +21,7 @@ import {withContext} from './Context';
 const HeaderWithContext = withContext(Header);
 const UserSignInWithContext = withContext(UserSignIn);
 const UserSignUpWithContext = withContext(UserSignUp);
+const UserSignOutWithContext = withContext(UserSignOut);
 
 export default function App() {
 
@@ -36,7 +37,9 @@ export default function App() {
         <Route exact path='/courses/:id' component={CourseDetails} />
         <Route path='/signin' component={UserSignInWithContext} /> 
         <Route path='/signup' component={UserSignUpWithContext} />
-        {/*<Route path='signout' component={UserSignOut} /> */}
+        <Route path='signout' component={UserSignOutWithContext} />
+        
+        
       </Switch>
       {/* <div className="App">
         <header className="App-header">

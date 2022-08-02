@@ -25,7 +25,15 @@ export default function CourseDetails() {
     }, []);
 
     function deleteCourse(id) {
-        context.data.deleteCourse(id);
+        context.data.deleteCourse(id)
+            .then(() => {
+                setCourse([]);
+                history.push('/courses');    
+            })
+            .catch((err) => {
+                console.log(err);
+                history.push('/error');
+              });
     }
 
     return (
@@ -33,7 +41,7 @@ export default function CourseDetails() {
             <div className="actions--bar">
                 <div className="wrap">
                     <Link className="button" to={`/courses/${id}/update`}>Update Course</Link>
-                    <Link className="button" to='/courses/' onClick={deleteCourse(id)}>Delete Course</Link>
+                    <Link className="button" to='/courses/' onClick={(id) => deleteCourse(id)}>Delete Course</Link>
                     <Link className="button button-secondary" to="/courses">Return to List</Link>
                 </div>
             </div>
