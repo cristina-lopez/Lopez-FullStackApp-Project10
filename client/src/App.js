@@ -8,7 +8,7 @@ import {
 import Header from './components/Header';
 import Courses from './components/Courses';
 import CreateCourse from './components/CreateCourse';
-//import UpdateCourse from './components/UpdateCourse';
+import UpdateCourse from './components/UpdateCourse';
 import CourseDetails from './components/CourseDetails';
 import UserSignIn from './components/UserSignIn';
 import UserSignUp from './components/UserSignUp';
@@ -33,7 +33,7 @@ export default function App() {
         <Route exact path='/' component={Courses} />
         <Route exact path='/courses' component={Courses} />
         <Route path ='/courses/create' component={CreateCourse} />
-        {/* <Route path ='/courses/:id/update' component={UpdateCourse} />  */}
+        <Route path ='/courses/:id/update' component={UpdateCourse} />
         <Route exact path='/courses/:id' component={CourseDetails} />
         <Route path='/signin' component={UserSignInWithContext} /> 
         <Route path='/signup' component={UserSignUpWithContext} />

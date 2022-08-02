@@ -11,7 +11,7 @@ export default function CreateCourse() {
     let context = useContext(Context.Context);
 
     const [title, setTitle] = useState('');
-    const [desc, setDesc] = useState('');
+    const [description, setDescription] = useState('');
     const [estimatedTime, setEstimatedTime] = useState('');
     const [materialsNeeded, setMaterialsNeeded] = useState('');
     const [errors, setErrors] = useState([]);
@@ -21,24 +21,22 @@ export default function CreateCourse() {
     }
 
     function submit() {
-        // Create course
         const course = {
           title,
-          desc,
+          description,
           estimatedTime,
           materialsNeeded,
+          userId: context.authenticatedUser.id
         };
 
         const body = JSON.stringify(course);
 
-        console.log(body.title);
-        //console.log(JSON.stringify(course));
         fetch("http://localhost:5000/api/courses", {
             method: "POST",
             headers: { "Content-Type": "application/json" ,
                     'Authorization': 'Basic ' + Buffer.from(`${context.authenticatedUser.emailAddress}:${context.authenticatedUser.password}`).toString("base64") 
             },
-            body: body,
+            body: body
             
         })
             .then( response => {
@@ -52,6 +50,8 @@ export default function CreateCourse() {
                     throw new Error();
                 }
             })
+        
+            history.push('/courses');
     }
 
     const change = (event) => {
@@ -60,8 +60,8 @@ export default function CreateCourse() {
         if (name === 'title') {
             setTitle(value);
         }
-        else if (name === 'desc') {
-            setDesc(value);
+        else if (name === 'description') {
+            setDescription(value);
         }
         else if (name === 'estimatedTime') {
             setEstimatedTime(value);
@@ -107,8 +107,8 @@ export default function CreateCourse() {
                                         />
                                     {/* <p>By USER </p> {course.author} */}
                                     <p>By USER </p>
-                                    <label htmlFor="desc">Course Description</label>
-                                        <textarea id="desc" name="desc" value={desc} onChange={change}></textarea>
+                                    <label htmlFor="description">Course Description</label>
+                                        <textarea id="description" name="description" value={description} onChange={change}></textarea>
                                 </div>
 
                                 <div>
