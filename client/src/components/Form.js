@@ -18,7 +18,7 @@ export default (props) => {
     event.preventDefault();
     cancel();
   }
-
+  //** Renders the HTML **/
   return (
     <div>
       <ErrorsDisplay errors={errors} />

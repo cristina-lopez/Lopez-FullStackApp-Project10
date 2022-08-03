@@ -19,6 +19,7 @@ export default function Courses() {
         fetchData();
     }, []);
 
+    //** Renders the HTML **/
     return (
         <main>
             <div className="wrap main--grid">

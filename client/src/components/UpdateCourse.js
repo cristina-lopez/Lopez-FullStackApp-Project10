@@ -8,16 +8,15 @@ export default function UpdateCourse() {
 
     let history = useHistory();
     let context = useContext(Context.Context);
-
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [estimatedTime, setEstimatedTime] = useState('');
     const [materialsNeeded, setMaterialsNeeded] = useState('');
     const [errors, setErrors] = useState([]);
-
     const [course] = useState([]);
     const { id } = useParams();
 
+    // Fetches course information for this id.
     useEffect(() => {
         const fetchData = async() => {
             try {
@@ -34,64 +33,7 @@ export default function UpdateCourse() {
         fetchData();
     }, []);
 
-
-    const cancel = () => {
-        history.push('/courses');
-    }
-
-    function submit() {
-       
-        const updatedCourse = {
-          title,
-          description,
-          estimatedTime,
-          materialsNeeded,
-          userId: context.authenticatedUser.id,
-        };
-
-        const body = JSON.stringify(updatedCourse);
-
-        fetch(`http://localhost:5000/api/courses/${id}`, {
-            method: "PUT",
-            headers: { "Content-Type": "application/json" ,
-                    'Authorization': 'Basic ' + Buffer.from(`${context.authenticatedUser.emailAddress}:${context.authenticatedUser.password}`).toString("base64") 
-            },
-            body: body,
-        })
-            .then( response => {
-                if (response.status === 204) {
-                    console.log("Course was updated!");
-                    history.push(`/courses/${id}`);
-                } else if (response.status === 400){
-                    return response.json().then(data => {
-                        return data.errors;
-                    });
-                } else {
-                    throw new Error();
-                }
-            })
-        
-    }
-
-    const change = (event) => {
-        const name = event.target.name;
-        const value = event.target.value;
-        if (name === 'courseTitle') {
-            setTitle(value);
-        }
-        else if (name === 'courseDescription') {
-            setDescription(value);
-        }
-        else if (name === 'estimatedTime') {
-            setEstimatedTime(value);
-        } else if (name === 'materialsNeeded') {
-            setMaterialsNeeded(value);
-        }
-        else {
-            return;
-        }
-    }
-
+    //** Renders the HTML **/
     return (
         <main>
             <div className="wrap">
@@ -133,4 +75,73 @@ export default function UpdateCourse() {
             </div>
         </main>
     );
+
+    //**  HELPER FUNCTIONS **//
+    function cancel() {
+        history.push('/courses');
+    }
+
+    function submit() {
+        const updatedCourse = {
+            title,
+            description,
+            estimatedTime,
+            materialsNeeded,
+            userId: context.authenticatedUser.id,
+        };
+
+        const body = JSON.stringify(updatedCourse);
+        // Creates errors to display on page. If there are no errors,
+        // send a POST data request.
+        let myErrors = [];
+        if(!title || !description) {
+            if (!title) {
+                myErrors.push(['Please provide a value for "Title".']);
+                setErrors(myErrors);
+            }
+            if (!description) {
+                myErrors.push(['Please provide a value for "Description".'])
+                setErrors(myErrors);
+            }
+        } else {
+            fetch(`http://localhost:5000/api/courses/${id}`, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" ,
+                        'Authorization': 'Basic ' + Buffer.from(`${context.authenticatedUser.emailAddress}:${context.authenticatedUser.password}`).toString("base64") 
+                },
+                body: body,
+            })
+                .then( response => {
+                    if (response.status === 204) {
+                        console.log("Course was updated!");
+                        history.push(`/courses/${id}`);
+                    } else if (response.status === 400){
+                        return response.json().then(data => {
+                            return data.errors;
+                        });
+                    } else {
+                        throw new Error();
+                    }
+                })
+        }
+    }
+
+    function change(event) {
+        const name = event.target.name;
+        const value = event.target.value;
+        if (name === 'courseTitle') {
+            setTitle(value);
+        }
+        else if (name === 'courseDescription') {
+            setDescription(value);
+        }
+        else if (name === 'estimatedTime') {
+            setEstimatedTime(value);
+        } else if (name === 'materialsNeeded') {
+            setMaterialsNeeded(value);
+        }
+        else {
+            return;
+        }
+    }
 }

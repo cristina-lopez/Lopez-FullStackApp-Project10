@@ -8,13 +8,13 @@ export default function CreateCourse() {
 
     let history = useHistory();
     let context = useContext(Context.Context);
-
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [estimatedTime, setEstimatedTime] = useState('');
     const [materialsNeeded, setMaterialsNeeded] = useState('');
     const [errors, setErrors] = useState([]);
-
+    
+    //** Renders the HTML **/
     return (
         <main>
             <div className="wrap">
@@ -56,7 +56,7 @@ export default function CreateCourse() {
         </main>
     );
 
-    // HELPER FUNCTIONS //
+    //**  HELPER FUNCTIONS **//
     function cancel() {
         history.push('/courses');
     }
@@ -71,42 +71,40 @@ export default function CreateCourse() {
         };
 
         const body = JSON.stringify(course);
-        //console.log(body);
-
-         if(!title || !description) { //only sends one error. not all
-             setErrors(['Creating a course was unsuccessful.']);
-             if (!title) {
-                setErrors(['Please provide a value for "Title".']);
-             }
-             if (!description) {
-                setErrors(['Please provide a value for "Description".'])
-             }
-         } else {
-            
-
-        fetch("http://localhost:5000/api/courses", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" ,
-                    'Authorization': 'Basic ' + Buffer.from(`${context.authenticatedUser.emailAddress}:${context.authenticatedUser.password}`).toString("base64") 
-            },
-            body: body
-            
-        })
-            .then( response => {
-                if (response.status === 201) {
-                    console.log("New Course was added!");
-                } else if (response.status === 400){
-                    response.json().then(data => {
-                        return {errors: [data.errors]};
-                    });
-                } else {
-                    throw new Error();
-                }
+        // Creates errors to display on page. If there are no errors,
+        // send a POST data request.
+        let myErrors = [];
+        if(!title || !description) {
+            if (!title) {
+                myErrors.push(['Please provide a value for "Title".']);
+                setErrors(myErrors);
+            }
+            if (!description) {
+                myErrors.push(['Please provide a value for "Description".'])
+                setErrors(myErrors);
+            }
+        } else {
+            fetch("http://localhost:5000/api/courses", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" ,
+                        'Authorization': 'Basic ' + Buffer.from(`${context.authenticatedUser.emailAddress}:${context.authenticatedUser.password}`).toString("base64") 
+                },
+                body: body
             })
-        
+                .then( response => {
+                    if (response.status === 201) {
+                        console.log("New course was added!");
+                    } else if (response.status === 400){
+                        response.json().then(data => {
+                            return {errors: [data.errors]};
+                        });
+                    } else {
+                        throw new Error();
+                    }
+                })
             history.push('/courses');
-    }
- }
+        }
+    }  
 
     function change(event) {
         const name = event.target.name;

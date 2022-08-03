@@ -6,7 +6,6 @@ import Context from '../Context';
 
 export default function CourseDetails() {
 
-    //let history = useHistory();
     const context = useContext(Context.Context);
     const [course, setCourse] = useState([]);
     const { id } = useParams();
@@ -26,7 +25,7 @@ export default function CourseDetails() {
     }, [id]);
 
     //**  HELPER FUNCTION **// 
-    // Deletes a course when the button is pressed on IF 
+    // Deletes a course when the button is pressed IF 
     // the user is authenticated and the owner of the course.
     function deleteACourse() {
             fetch(`http://localhost:5000/api/courses/${id}`, {

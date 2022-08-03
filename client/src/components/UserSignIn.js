@@ -38,6 +38,8 @@ export default class UserSignIn extends Component {
         </main>
     );
   }
+  
+  //** HELPER FUNCTIONS **/
   change = (event) => {
     const name = event.target.name;
     const value = event.target.value;

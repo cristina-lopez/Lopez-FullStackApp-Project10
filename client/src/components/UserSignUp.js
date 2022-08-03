@@ -73,6 +73,7 @@ export default class UserSignUp extends Component {
         );
     }
 
+    //** HELPER FUNCTIONS **/
     change = (event) => {
         const name = event.target.name;
         const value = event.target.value;
@@ -86,14 +87,12 @@ export default class UserSignUp extends Component {
 
     submit = () => {
         const {context} = this.props;
-
         const {
             firstName,
             lastName,
             emailAddress,
             password,
         } = this.state;
-
         const user = {
             firstName,
             lastName,
@@ -121,4 +120,4 @@ export default class UserSignUp extends Component {
     cancel = () => {
         this.props.history.push('/');
     }
-    }
+}

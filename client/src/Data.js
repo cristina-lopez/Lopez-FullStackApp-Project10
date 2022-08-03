@@ -1,7 +1,3 @@
-//import config from './config';
-
-import { useContext } from "react";
-import Context from "./Context";
 import { Buffer } from "buffer";
 
 // This js file has methods that will interact with the user and course data.
@@ -26,13 +22,6 @@ export default class Data {
             options.headers["Authorization"] = `Basic ${encodedCredentials}`;
           }
     
-        //check is auth is required
-/*         if (requiresAuth) {
-            const encodedCredentials = Buffer.from(`${credentials.emailAddress}:${credentials.password}`).toString('base64');
-    
-            options.headers['Authorization'] = `Basic ${encodedCredentials}`;
-        } */
-        console.log(options);
         return fetch(url, options);
     }
     
