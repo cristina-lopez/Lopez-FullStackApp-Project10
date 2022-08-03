@@ -35,7 +35,7 @@ export default function App() {
         <Route exact path='/courses' component={Courses} />
         <PrivateRoute path="/courses/create" component={CreateCourse} />
         {/* <Route path ='/courses/create' component={CreateCourse} /> */}
-        <Route path ='/courses/:id/update' component={UpdateCourse} />
+        <PrivateRoute path ='/courses/:id/update' component={UpdateCourse} />
         <Route exact path='/courses/:id' component={CourseDetails} />
         <Route path='/signin' component={UserSignInWithContext} /> 
         <Route path='/signup' component={UserSignUpWithContext} />

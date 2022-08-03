@@ -51,9 +51,23 @@ export default function CourseDetails() {
             <main>
             <div className="actions--bar">
                 <div className="wrap">
-                    <Link className="button" to={`/courses/${id}/update`}>Update Course</Link>
-                    <Link className="button" to='/courses/' onClick={deleteACourse}>Delete Course</Link>
+                {(context.authenticatedUser && course.user) ?
+                    (context.authenticatedUser.id===course.user.id) ?
+                        <React.Fragment>
+                            <Link className="button" to={`/courses/${id}/update`}>Update Course</Link>
+                            <Link className="button" to='/courses/' onClick={deleteACourse}>Delete Course</Link>
+                            <Link className="button button-secondary" to="/courses">Return to List</Link>
+                        </React.Fragment>
+                    : 
                     <Link className="button button-secondary" to="/courses">Return to List</Link>
+                :
+                <Link className="button button-secondary" to="/courses">Return to List</Link>
+                }
+
+
+                    {/* <Link className="button" to={`/courses/${id}/update`}>Update Course</Link>
+                    <Link className="button" to='/courses/' onClick={deleteACourse}>Delete Course</Link>
+                    <Link className="button button-secondary" to="/courses">Return to List</Link> */}
                 </div>
             </div>
             
