@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 export default function Courses() {
 
+    let history = useHistory();
     const [courses, setCourses] = useState([]);
 
     // Fetches all of the courses.
@@ -10,8 +11,12 @@ export default function Courses() {
         const fetchData = async() => {
             try {
                 const response = await fetch('http://localhost:5000/api/courses');
-                const json = await response.json();
-                setCourses(json.courses);
+                if (response.status===200) {
+                    const json = await response.json();
+                    setCourses(json.courses);
+                } else if(response.status === 500) {
+                    history.push('/error');
+                }
             } catch (err) {
                 console.log("error", err)
             }

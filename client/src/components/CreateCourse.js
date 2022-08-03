@@ -13,7 +13,7 @@ export default function CreateCourse() {
     const [estimatedTime, setEstimatedTime] = useState('');
     const [materialsNeeded, setMaterialsNeeded] = useState('');
     const [errors, setErrors] = useState([]);
-    
+
     //** Renders the HTML **/
     return (
         <main>
@@ -98,6 +98,8 @@ export default function CreateCourse() {
                         response.json().then(data => {
                             return {errors: [data.errors]};
                         });
+                    } else if (response.status === 500) {
+                        history.push('/error');
                     } else {
                         throw new Error();
                     }
