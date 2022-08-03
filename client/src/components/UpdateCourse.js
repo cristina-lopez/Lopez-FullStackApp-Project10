@@ -1,8 +1,8 @@
 import React, { useState, useContext, useEffect } from 'react';
-import Form from './Form';
-import { useHistory, useParams } from 'react-router-dom';
-import Context from '../Context';
+import { useHistory, useParams, Redirect } from 'react-router-dom';
 import { Buffer } from 'buffer';
+import Form from './Form';
+import Context from '../Context';
 
 export default function UpdateCourse() {
 
@@ -36,6 +36,10 @@ export default function UpdateCourse() {
     //** Renders the HTML **/
     return (
         <main>
+        {(course.length===0) ?
+                <Redirect to='/notfound' />
+            :
+            <React.Fragment>
             <div className="wrap">
                 <h2>Update Course</h2>
                 <Form
@@ -73,6 +77,8 @@ export default function UpdateCourse() {
                     )} 
                 />
             </div>
+            </React.Fragment>
+        }
         </main>
     );
 

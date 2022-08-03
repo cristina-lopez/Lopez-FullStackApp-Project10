@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Link, Redirect, useParams } from 'react-router-dom';
+import { Link, useParams, useHistory } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown'
 import { Buffer } from "buffer";
 import Context from '../Context';
-import NotFound from './NotFound';
 
 export default function CourseDetails() {
 
+    let history = useHistory();
     const context = useContext(Context.Context);
     const [course, setCourse] = useState([]);
     const { id } = useParams();
@@ -16,15 +16,12 @@ export default function CourseDetails() {
         const fetchData = async() => {
             try {
                 const response = await fetch(`http://localhost:5000/api/courses/${id}`);
-                if(response.ok) {
+                if(response.status===200) {
                     const json = await response.json();
                     setCourse(json);
                 } else {
-                    setCourse([]);
+                    history.push('/notfound');
                 }
-                console.log(response);
-                
-                console.log(course);
             } catch (err) {
                 console.log("error", err)
             }
@@ -34,16 +31,11 @@ export default function CourseDetails() {
 
     //** Renders the HTML **/
     return ( 
-    
             <main>
             {/* Displays Update, Delete and Return to List buttons if user is authenticated
             and user is owner of course. Only displays Return to List button if the previous 
             conditions don't apply. */}
-            {(course.length===0) ?
-                <Redirect to='/notfound' />
-            :
-            <React.Fragment>
-            <div className="actions--bar">
+                <div className="actions--bar">
                     <div className="wrap">
                         {(context.authenticatedUser && course.user) ?
                             (context.authenticatedUser.id===course.user.id) ?
@@ -59,7 +51,7 @@ export default function CourseDetails() {
                         }
                     </div>
                 </div>
-            
+            {/* Displays the information about the course. */}
                 <div className="wrap">
                     <h2>Course Detail</h2>
                     <form>
@@ -83,14 +75,8 @@ export default function CourseDetails() {
                         </div>
                     </form>
                 </div>
-                </React.Fragment>
-            }
-                
             </main>
-        
     );
-
-
 
     //**  HELPER FUNCTION **// 
     // Deletes a course when the button is pressed IF 
@@ -117,5 +103,3 @@ export default function CourseDetails() {
         })
     }
 }
-
-{/* Displays the information about the course. */}
