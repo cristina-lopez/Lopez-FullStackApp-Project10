@@ -21,11 +21,16 @@ export default function UpdateCourse() {
         const fetchData = async() => {
             try {
                 const response = await fetch(`http://localhost:5000/api/courses/${id}`);
-                const json = await response.json();
-                setTitle(json.title);
-                setDescription(json.description);
-                setEstimatedTime(json.estimatedTime);
-                setMaterialsNeeded(json.materialsNeeded);
+                console.log(response);
+                if(response.status===200) {
+                    const json = await response.json();
+                    setTitle(json.title);
+                    setDescription(json.description);
+                    setEstimatedTime(json.estimatedTime);
+                    setMaterialsNeeded(json.materialsNeeded);
+                } else {
+                    history.push('/notfound');
+                }
             } catch (err) {
                 console.log("error", err)
             }
@@ -36,10 +41,6 @@ export default function UpdateCourse() {
     //** Renders the HTML **/
     return (
         <main>
-        {(course.length===0) ?
-                <Redirect to='/notfound' />
-            :
-            <React.Fragment>
             <div className="wrap">
                 <h2>Update Course</h2>
                 <Form
@@ -77,8 +78,6 @@ export default function UpdateCourse() {
                     )} 
                 />
             </div>
-            </React.Fragment>
-        }
         </main>
     );
 
