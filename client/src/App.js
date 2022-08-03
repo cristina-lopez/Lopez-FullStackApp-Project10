@@ -4,7 +4,6 @@ import {
   Route,
   Switch
 } from 'react-router-dom';
-//import { Provider } from './Context';
 import Header from './components/Header';
 import Courses from './components/Courses';
 import CreateCourse from './components/CreateCourse';
@@ -13,12 +12,12 @@ import CourseDetails from './components/CourseDetails';
 import UserSignIn from './components/UserSignIn';
 import UserSignUp from './components/UserSignUp';
 import UserSignOut from './components/UserSignOut';
-//import config from './components/config';
+import NotFound from './components/NotFound';
+
 import './global.css';
 import {withContext} from './Context';
 import PrivateRoute from './PrivateRoute';
 
-//const CoursesWithContext = withContext(Courses);
 const HeaderWithContext = withContext(Header);
 const UserSignInWithContext = withContext(UserSignIn);
 const UserSignUpWithContext = withContext(UserSignUp);
@@ -34,31 +33,14 @@ export default function App() {
         <Route exact path='/' component={Courses} />
         <Route exact path='/courses' component={Courses} />
         <PrivateRoute path="/courses/create" component={CreateCourse} />
-        {/* <Route path ='/courses/create' component={CreateCourse} /> */}
         <PrivateRoute path ='/courses/:id/update' component={UpdateCourse} />
         <Route exact path='/courses/:id' component={CourseDetails} />
         <Route path='/signin' component={UserSignInWithContext} /> 
         <Route path='/signup' component={UserSignUpWithContext} />
         <Route path='/signout' component={UserSignOutWithContext} />
-        
+        <Route path='/notfound' component={NotFound} />
         
       </Switch>
-      {/* <div className="App">
-        <header className="App-header">
-          <img className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>  */}
     </BrowserRouter>
   );
 }
