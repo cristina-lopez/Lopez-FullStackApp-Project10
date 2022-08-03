@@ -16,9 +16,12 @@ export default function CourseDetails() {
         const fetchData = async() => {
             try {
                 const response = await fetch(`http://localhost:5000/api/courses/${id}`);
-                if(response.status===200) {
+                console.log(response);
+                if(response.status === 200) {
                     const json = await response.json();
                     setCourse(json);
+                } else if(response.status === 500) {
+                    history.push('/error');
                 } else {
                     history.push('/notfound');
                 }

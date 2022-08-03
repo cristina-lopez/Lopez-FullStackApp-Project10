@@ -13,6 +13,8 @@ import UserSignIn from './components/UserSignIn';
 import UserSignUp from './components/UserSignUp';
 import UserSignOut from './components/UserSignOut';
 import NotFound from './components/NotFound';
+import Forbidden from './components/Forbidden';
+import UnhandledError from './components/UnhandledError';
 
 import './global.css';
 import {withContext} from './Context';
@@ -38,7 +40,9 @@ export default function App() {
         <Route path='/signin' component={UserSignInWithContext} /> 
         <Route path='/signup' component={UserSignUpWithContext} />
         <Route path='/signout' component={UserSignOutWithContext} />
-        <Route path='/notfound' component={NotFound} />
+        <Route path='/error' component={UnhandledError} />
+        <Route path='/forbidden' component={Forbidden} />
+        <Route component={NotFound} />
         
       </Switch>
     </BrowserRouter>

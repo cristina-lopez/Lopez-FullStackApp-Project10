@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { useHistory, useParams, Redirect } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { Buffer } from 'buffer';
 import Form from './Form';
 import Context from '../Context';
@@ -36,7 +36,7 @@ export default function UpdateCourse() {
             }
         };
         fetchData();
-    }, []);
+    }, [history, id]);
 
     //** Renders the HTML **/
     return (
