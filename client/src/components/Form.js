@@ -33,6 +33,8 @@ export default (props) => {
   );
 }
 
+// HELPER FUNCTION //
+// Displays the errors on the form.
 function ErrorsDisplay({ errors }) {
   let errorsDisplay = null;
 

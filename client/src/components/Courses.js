@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-//import { Context } from '../Context';
-//import Data from '../Data';
 
 export default function Courses() {
 
     const [courses, setCourses] = useState([]);
 
+    // Fetches all of the courses.
     useEffect(() => {
         const fetchData = async() => {
             try {
@@ -31,7 +30,7 @@ export default function Courses() {
                         </Link>
                     );
                 })} 
-                
+                {/* Button to create a course. */}
                 <Link className="course--module course--add--module" to="/courses/create">
                     <span className="course--add--title">
                         <svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"

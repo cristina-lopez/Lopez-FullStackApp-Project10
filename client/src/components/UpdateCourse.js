@@ -3,7 +3,6 @@ import Form from './Form';
 import { useHistory, useParams } from 'react-router-dom';
 import Context from '../Context';
 import { Buffer } from 'buffer';
-//import Data from '../Data';
 
 export default function UpdateCourse() {
 
@@ -14,7 +13,7 @@ export default function UpdateCourse() {
     const [description, setDescription] = useState('');
     const [estimatedTime, setEstimatedTime] = useState('');
     const [materialsNeeded, setMaterialsNeeded] = useState('');
-    const [errors] = useState([]);
+    const [errors, setErrors] = useState([]);
 
     const [course] = useState([]);
     const { id } = useParams();

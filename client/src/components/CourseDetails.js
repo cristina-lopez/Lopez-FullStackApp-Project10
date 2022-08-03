@@ -1,17 +1,17 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Link, useParams, useHistory } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown'
-import Context from '../Context';
 import { Buffer } from "buffer";
+import Context from '../Context';
 
 export default function CourseDetails() {
 
-    let history = useHistory();
-    let context = useContext(Context.Context);
-
+    //let history = useHistory();
+    const context = useContext(Context.Context);
     const [course, setCourse] = useState([]);
     const { id } = useParams();
     
+    // Fetches course information for this id.
     useEffect(() => {
         const fetchData = async() => {
             try {
@@ -23,8 +23,11 @@ export default function CourseDetails() {
             }
         };
         fetchData();
-    }, []);
+    }, [id]);
 
+    //**  HELPER FUNCTION **// 
+    // Deletes a course when the button is pressed on IF 
+    // the user is authenticated and the owner of the course.
     function deleteACourse() {
             fetch(`http://localhost:5000/api/courses/${id}`, {
                 method: "DELETE",
@@ -47,30 +50,29 @@ export default function CourseDetails() {
             })
     }
 
+    //** Renders the HTML **/
     return (
-            <main>
+        <main>
+        {/* Displays Update, Delete and Return to List buttons if user is authenticated
+        and user is owner of course. Only displays Return to List button if the previous 
+        conditions don't apply. */}
             <div className="actions--bar">
                 <div className="wrap">
-                {(context.authenticatedUser && course.user) ?
-                    (context.authenticatedUser.id===course.user.id) ?
-                        <React.Fragment>
-                            <Link className="button" to={`/courses/${id}/update`}>Update Course</Link>
-                            <Link className="button" to='/courses/' onClick={deleteACourse}>Delete Course</Link>
-                            <Link className="button button-secondary" to="/courses">Return to List</Link>
-                        </React.Fragment>
-                    : 
+                    {(context.authenticatedUser && course.user) ?
+                        (context.authenticatedUser.id===course.user.id) ?
+                            <React.Fragment>
+                                <Link className="button" to={`/courses/${id}/update`}>Update Course</Link>
+                                <Link className="button" to='/courses/' onClick={deleteACourse}>Delete Course</Link>
+                                <Link className="button button-secondary" to="/courses">Return to List</Link>
+                            </React.Fragment>
+                        : 
+                        <Link className="button button-secondary" to="/courses">Return to List</Link>
+                    :
                     <Link className="button button-secondary" to="/courses">Return to List</Link>
-                :
-                <Link className="button button-secondary" to="/courses">Return to List</Link>
-                }
-
-
-                    {/* <Link className="button" to={`/courses/${id}/update`}>Update Course</Link>
-                    <Link className="button" to='/courses/' onClick={deleteACourse}>Delete Course</Link>
-                    <Link className="button button-secondary" to="/courses">Return to List</Link> */}
+                    }
                 </div>
             </div>
-            
+        {/* Displays the information about the course. */}
             <div className="wrap">
                 <h2>Course Detail</h2>
                 <form>
