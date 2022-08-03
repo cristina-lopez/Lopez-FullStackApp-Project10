@@ -72,13 +72,19 @@ router.get('/courses/:id', asyncHandler(async(req, res) => {
       }
     ]
   });
-  res.status(200).json({
-    title: course.title,
-    description: course.description,
-    estimatedTime: course.estimatedTime,
-    materialsNeeded: course.materialsNeeded,
-    user: course.user,
-  });
+  if (!course) {
+    res.status(404).json({
+       message: "Course not found",
+    });
+  } else {
+    res.status(200).json({
+      title: course.title,
+      description: course.description,
+      estimatedTime: course.estimatedTime,
+      materialsNeeded: course.materialsNeeded,
+      user: course.user,
+    });
+  }
 }));
 
 // Route creates new course
