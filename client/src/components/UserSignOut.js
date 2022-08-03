@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 
-export default function UserSignOut({context}) {
-  context.actions.signOut();
-  console.log("You are now signed out!")
-
+export default ({context}) => {
+  useEffect(() => {
+    context.actions.signOut();
+  });
+  
   return (
     <Redirect to="/courses" />
   );

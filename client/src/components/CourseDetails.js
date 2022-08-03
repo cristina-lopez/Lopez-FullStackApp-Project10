@@ -16,11 +16,10 @@ export default function CourseDetails() {
         const fetchData = async() => {
             try {
                 const response = await fetch(`http://localhost:5000/api/courses/${id}`);
-                console.log(response);
                 if(response.status === 200) {
                     const json = await response.json();
                     setCourse(json);
-                } else if(response.status === 500) {
+                } else if (response.status === 500) {
                     history.push('/error');
                 } else {
                     history.push('/notfound');
@@ -30,7 +29,7 @@ export default function CourseDetails() {
             }
         };
         fetchData();
-    }, [id]);
+    }, [id, history]);
 
     //** Renders the HTML **/
     return ( 

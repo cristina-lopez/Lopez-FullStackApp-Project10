@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { Redirect, useHistory, useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { Buffer } from 'buffer';
 import Form from './Form';
 import Context from '../Context';
@@ -14,7 +14,6 @@ export default function UpdateCourse() {
     const [estimatedTime, setEstimatedTime] = useState('');
     const [materialsNeeded, setMaterialsNeeded] = useState('');
     const [errors, setErrors] = useState([]);
-    const [course, setCourse] = useState([]);
     const [user, setUser] = useState([]);
     const { id } = useParams();
 
@@ -25,7 +24,6 @@ export default function UpdateCourse() {
                 const response = await fetch(`http://localhost:5000/api/courses/${id}`);
                 if(response.status===200) {
                     const json = await response.json();
-                    console.log(json);
                     setTitle(json.title);
                     setDescription(json.description);
                     setEstimatedTime(json.estimatedTime);
@@ -41,7 +39,7 @@ export default function UpdateCourse() {
             }
         };
         fetchData();
-    }, []);
+    }, [history, id]);
 
     //** Renders the HTML **/
     return (
