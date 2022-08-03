@@ -1,8 +1,9 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import { Redirect, useHistory, useParams } from 'react-router-dom';
 import { Buffer } from 'buffer';
 import Form from './Form';
 import Context from '../Context';
+import Forbidden from './Forbidden';
 
 export default function UpdateCourse() {
 
@@ -13,7 +14,8 @@ export default function UpdateCourse() {
     const [estimatedTime, setEstimatedTime] = useState('');
     const [materialsNeeded, setMaterialsNeeded] = useState('');
     const [errors, setErrors] = useState([]);
-    const [course] = useState([]);
+    const [course, setCourse] = useState([]);
+    const [user, setUser] = useState([]);
     const { id } = useParams();
 
     // Fetches course information for this id.
@@ -21,13 +23,14 @@ export default function UpdateCourse() {
         const fetchData = async() => {
             try {
                 const response = await fetch(`http://localhost:5000/api/courses/${id}`);
-                console.log(response);
                 if(response.status===200) {
                     const json = await response.json();
+                    console.log(json);
                     setTitle(json.title);
                     setDescription(json.description);
                     setEstimatedTime(json.estimatedTime);
                     setMaterialsNeeded(json.materialsNeeded);
+                    setUser(json.user);
                 } else {
                     history.push('/notfound');
                 }
@@ -36,48 +39,57 @@ export default function UpdateCourse() {
             }
         };
         fetchData();
-    }, [history, id]);
+    }, []);
 
     //** Renders the HTML **/
     return (
         <main>
-            <div className="wrap">
-                <h2>Update Course</h2>
-                <Form
-                    cancel={cancel}
-                    errors={errors}
-                    submit={submit}
-                    submitButtonText="Update Course"
-                    elements={() => (
-                        <React.Fragment>
-                            <div className="main--flex">
-                                <div>
-                                    <label htmlFor="courseTitle">Course Title</label>
-                                        <input 
-                                            id="courseTitle" name="courseTitle" type="text" value={title} 
-                                            onChange={change}
-                                        />
-                                    {course.user && 
-                                        (<p>
-                                            By {course.user.firstName} {course.user.lastName}
-                                        </p>
-                                    )}
-                                    <label htmlFor="courseDescription">Course Description</label>
-                                        <textarea id="courseDescription" name="courseDescription" value={description} onChange={change}></textarea>
-                                </div>
+            {(user && user.id === context.authenticatedUser.id) ? 
+                <React.Fragment>
+                        <div className="wrap">
+                            <h2>Update Course</h2>
+                            <Form
+                                cancel={cancel}
+                                errors={errors}
+                                submit={submit}
+                                submitButtonText="Update Course"
+                                elements={() => (
+                                    <React.Fragment>
+                                        <div className="main--flex">
+                                            <div>
+                                                <label htmlFor="courseTitle">Course Title</label>
+                                                    <input 
+                                                        id="courseTitle" name="courseTitle" type="text" value={title} 
+                                                        onChange={change}
+                                                    />
+                                                {user && 
+                                                    (<p>
+                                                        By {user.firstName} {user.lastName}
+                                                    </p>
+                                                )}
+                                                <label htmlFor="courseDescription">Course Description</label>
+                                                    <textarea id="courseDescription" name="courseDescription" value={description} onChange={change}></textarea>
+                                            </div>
 
-                                <div>
-                                    <label htmlFor="estimatedTime">Estimated Time</label>
-                                        <input id="estimatedTime" name="estimatedTime" type="text" value={estimatedTime} onChange={change} />
+                                            <div>
+                                                <label htmlFor="estimatedTime">Estimated Time</label>
+                                                    <input id="estimatedTime" name="estimatedTime" type="text" value={estimatedTime} onChange={change} />
 
-                                    <label htmlFor="materialsNeeded">Materials Needed</label>
-                                        <textarea id="materialsNeeded" name="materialsNeeded" value={materialsNeeded} onChange={change}></textarea>
-                                </div>
-                            </div>
-                        </React.Fragment>
-                    )} 
-                />
-            </div>
+                                                <label htmlFor="materialsNeeded">Materials Needed</label>
+                                                    <textarea id="materialsNeeded" name="materialsNeeded" value={materialsNeeded} onChange={change}></textarea>
+                                            </div>
+                                        </div>
+                                    </React.Fragment>
+                                )} 
+                            />
+                        </div>
+                    </React.Fragment>
+
+            :
+                <Forbidden />
+            }
+                    
+            
         </main>
     );
 
