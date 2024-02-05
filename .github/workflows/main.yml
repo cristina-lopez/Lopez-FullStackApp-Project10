@@ -1,0 +1,9 @@
+name: Hello
+run-name: Cristina Test 🚀
+on: [pull_request]
+jobs:
+  Testing-Github-Actions:
+    runs-on: ubuntu-latest
+    steps:
+      - name: First interaction
+        run: echo "Hello world"
