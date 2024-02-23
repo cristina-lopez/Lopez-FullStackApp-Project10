@@ -7,3 +7,8 @@ jobs:
     steps:
       - name: First interaction
         run: echo "Hello world"
+  Run-unit-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: run tests
+        run: npm test
