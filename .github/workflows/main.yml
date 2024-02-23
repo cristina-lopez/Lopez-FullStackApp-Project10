@@ -10,5 +10,9 @@ jobs:
   Run-unit-tests:
     runs-on: ubuntu-latest
     steps:
+      - name: navigate to client foler
+        run: cd client
+      - name: install dependencies
+        run: npm install
       - name: run tests
         run: npm test
