@@ -7,7 +7,7 @@ In this full stack app, users are asked to sign in or sign up in order to modify
 
 Once signed in, users can view and create courses, and edit and delete courses they've created.
 
-// TODO: Include pictures of the screens.
+// TODO: Include pictures of the screens here.
 
 ## To run locally:
 make sure you're on the right version by running nvm install

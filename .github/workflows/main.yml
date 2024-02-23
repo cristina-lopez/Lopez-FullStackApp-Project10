@@ -1,4 +1,4 @@
-name: Hello
+name: Hello World
 run-name: Cristina Test 🚀
 on: [pull_request]
 jobs:
