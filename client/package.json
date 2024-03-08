@@ -18,7 +18,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "node client/src/tests/Forbidden.test.js",
+    "test": "node src/tests/Forbidden.test.js",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
